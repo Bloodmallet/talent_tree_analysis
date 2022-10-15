@@ -16,6 +16,10 @@ from components.filters import (
     get_active_abilities,
     get_single_point_talents,
     get_avg_node_size,
+    get_three_rankers,
+    get_active_abilities_pre_8_gate,
+    get_active_abilities_pre_20_gate,
+    get_active_abilities_post_20_gate,
 )
 
 
@@ -49,7 +53,9 @@ def load_data() -> typing.Dict[str, typing.Dict]:
 
 
 def main():
-    app = Dash(__name__, external_stylesheets=[dbc.themes.SLATE])
+    app = Dash(
+        __name__, title="Talent Tree Analysis", external_stylesheets=[dbc.themes.SLATE]
+    )
 
     data = load_data()
 
@@ -63,6 +69,10 @@ def main():
         get_post_20_gate_talent_points,
         get_choice_nodes,
         get_active_abilities,
+        get_three_rankers,
+        get_active_abilities_pre_8_gate,
+        get_active_abilities_pre_20_gate,
+        get_active_abilities_post_20_gate,
     ]
 
     spec_graphs = [
@@ -84,7 +94,7 @@ def main():
 
     app.layout = html.Div(
         children=[
-            html.H1(children="Talent tree analysis"),
+            html.H1(children="Talent Tree Analysis"),
             html.H2(children="Class Trees"),
             html.Div(
                 className="container",
