@@ -105,3 +105,64 @@ def get_avg_node_size(data: dict, node_type: str) -> pandas.DataFrame:
     ]
 
     return df
+
+
+def get_three_rankers(data: dict, node_type: str) -> pandas.DataFrame:
+    df = _get_df(data)
+    df["Number of nodes with three ranks"] = [
+        len([node for node in v[node_type] if node["maxRanks"] >= 3])
+        for v in data.values()
+    ]
+
+    return df
+
+
+def get_active_abilities_pre_8_gate(data: dict, node_type: str) -> pandas.DataFrame:
+    df = _get_df(data)
+    df["Number of active abilities pre-8-gate"] = [
+        len(
+            [
+                n
+                for n in v[node_type]
+                if any([entry["type"] == "active" for entry in n["entries"]])
+                and n.get("reqPoints", 0) < 8
+            ]
+        )
+        for v in data.values()
+    ]
+
+    return df
+
+
+def get_active_abilities_pre_20_gate(data: dict, node_type: str) -> pandas.DataFrame:
+    df = _get_df(data)
+    df["Number of active abilities pre-20-gate"] = [
+        len(
+            [
+                n
+                for n in v[node_type]
+                if any([entry["type"] == "active" for entry in n["entries"]])
+                and 8 <= n.get("reqPoints", 0) < 20
+            ]
+        )
+        for v in data.values()
+    ]
+
+    return df
+
+
+def get_active_abilities_post_20_gate(data: dict, node_type: str) -> pandas.DataFrame:
+    df = _get_df(data)
+    df["Number of active abilities post-20-gate"] = [
+        len(
+            [
+                n
+                for n in v[node_type]
+                if any([entry["type"] == "active" for entry in n["entries"]])
+                and 20 <= n.get("reqPoints", 0)
+            ]
+        )
+        for v in data.values()
+    ]
+
+    return df
