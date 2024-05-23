@@ -22,9 +22,11 @@ from components.filters import (
     get_active_abilities_post_20_gate,
 )
 
+TALENT_JSON_PATH = r"data/talents.json"
+
 
 def load_data() -> typing.Dict[str, typing.Dict]:
-    with open(r"data\raw_raidbots_talent_information.json", "r") as f:
+    with open(TALENT_JSON_PATH, "r") as f:
         raw_data = json.load(f)
 
     color_map = {
